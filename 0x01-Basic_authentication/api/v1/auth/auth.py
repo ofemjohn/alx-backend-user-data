@@ -8,6 +8,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 class Auth:
     ''' Class to manage API authentication '''
 
@@ -37,7 +38,7 @@ class Auth:
             # Check if excluded path ends with a wildcard
             if exc[-1] == '*':
                 # Check if endpoint path matches excluded path without wildcard
-                if exc[:-1] == path[:len(exc)-1]:
+                if exc[:-1] == path[:len(exc) - 1]:
                     return False
             else:
                 # Check if endpoint path matches excluded path exactly
