@@ -37,17 +37,21 @@ elif os.getenv("AUTH_TYPE") == "auth":
     auth = Auth()
 
 # Error handlers
+
+
 @app.errorhandler(404)
 def not_found(error) -> str:
     """ Handler for not found errors.
     """
     return jsonify({"error": "Not found"}), 404
 
+
 @app.errorhandler(401)
 def unauthorized(error) -> str:
     """ Handler for unauthorized errors.
     """
     return jsonify({"error": "Unauthorized"}), 401
+
 
 @app.errorhandler(403)
 def forbidden(error) -> str:
@@ -56,14 +60,19 @@ def forbidden(error) -> str:
     return jsonify({"error": "Forbidden"}), 403
 
 # Before request handler
+
+
 @app.before_request
 def before():
     """ Handler for processing requests before they are executed.
     """
     if auth:
         # Paths that do not require authentication
-        paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/',
-                 '/api/v1/auth_session/login/']
+        paths = [
+            '/api/v1/status/',
+            '/api/v1/unauthorized/',
+            '/api/v1/forbidden/',
+            '/api/v1/auth_session/login/']
         # Skipping authentication for unsecured paths
         if not auth.require_auth(request.path, paths):
             return
@@ -74,6 +83,7 @@ def before():
         request.current_user = auth.current_user(request)
         if not request.current_user:
             abort(403)
+
 
 # Main function
 if __name__ == "__main__":
