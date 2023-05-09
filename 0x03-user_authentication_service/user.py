@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 '''
 user model for a database connection to a database server
-from sqlalchemy.ext.declarative import declarative_base
-'''
 from sqlalchemy.orm import declarative_base
+'''
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 
 
