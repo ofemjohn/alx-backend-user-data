@@ -57,10 +57,9 @@ class DB:
         - NoResultFound: when no results are found
         - InvalidRequestError: when wrong query arguments are passed
         '''
-        try:
-            user = self._session.query(User).filter_by(**kwargs).first()
-            if user is None:
-                raise NoResultFound('no results were found')
-            return user
-        except InvalidRequestError as e:
-            raise e
+        if not kwargs:
+            raise InvalidRequestError
+        user = self.__session.query(User).filter_by(**kwargs).first()
+        if user is None:
+            raise NoResultFound
+        return user
