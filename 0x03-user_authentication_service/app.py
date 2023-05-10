@@ -6,9 +6,8 @@ from flask import jsonify
 
 app = Flask(__name__)
 
+
 app.route('/', methods=['GET'])
-
-
 def welcome() -> str:
     '''A simple route'''
     return jsonify({"message": "Bienvenue"})
