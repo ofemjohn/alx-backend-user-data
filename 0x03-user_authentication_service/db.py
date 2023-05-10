@@ -7,6 +7,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import User
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
+
 
 from user import Base
 
@@ -26,7 +29,7 @@ class DB:
         self.__session = None
 
     @property
-    def _session(self):
+    def _session(self) -> Session:
         '''
         Memoized session object
         '''
@@ -37,10 +40,27 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         '''
-        method that add user to the
+        method that add user to thec
         database and returns a User object
         '''
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
         self._session.commit()
         return user
+
+    def find_user_by(self, **kwargs):
+        '''
+        Returns the first row found in the users table
+        as filtered by the method's input arguments.
+
+        Raises:
+        - NoResultFound: when no results are found
+        - InvalidRequestError: when wrong query arguments are passed
+        '''
+        try:
+            user = self._session.query(User).filter_by(**kwargs).first()
+            if user is None:
+                raise NoResultFound('no results were found')
+            return user
+        except InvalidRequestError as e:
+            raise e
