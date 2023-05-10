@@ -58,7 +58,10 @@ class DB:
         - InvalidRequestError: when wrong query arguments are passed
         '''
         if not kwargs:
-            raise InvalidRequestError
+            columns = User.__table__.columns.keys()
+            for key in columns.keys():
+                if key not in columns:
+                    raise InvalidRequestError
         user = self._session.query(User).filter_by(**kwargs).first()
         if user is None:
             raise NoResultFound
