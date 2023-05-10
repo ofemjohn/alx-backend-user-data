@@ -3,8 +3,8 @@
 user model for a database connection to a database server
 from sqlalchemy.orm import declarative_base
 '''
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
