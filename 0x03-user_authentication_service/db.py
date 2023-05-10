@@ -48,7 +48,7 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         '''
         Returns the first row found in the users table
         as filtered by the method's input arguments.
