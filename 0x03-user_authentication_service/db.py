@@ -41,6 +41,6 @@ class DB:
         database and returns a User object
         '''
         user = User(email=email, hashed_password=hashed_password)
-        session = self.__session.add(user)
-        session.commit()
+        self._session.add(user)
+        self._session.commit()
         return user
