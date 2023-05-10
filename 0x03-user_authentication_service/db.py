@@ -71,13 +71,16 @@ class DB:
         '''
         update user with given user_id,
         using the provided keyword arguments.
-    '''
-        #find the user with the given user_id
-        user = self.find_user_by(id=user_id)
-        #update the user with the updated user_id
-        for key, value in kwargs.items():
-            if hasattr(user, key):
-                setattr(user, key, value)
-            else:
-                raise ValueError
-        self._session.commit()
+        '''
+        try:
+            # find the user with the given user_id
+            user = self.find_user_by(id=user_id)
+            # update the user with the updated user_id
+            for key, value in kwargs.items():
+                if hasattr(user, key):
+                    setattr(user, key, value)
+                else:
+                    raise ValueError
+            self._session.commit()
+        except NoResultFound:
+            raise ValueError
