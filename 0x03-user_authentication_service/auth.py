@@ -13,11 +13,12 @@ def _hash_password(password: str) -> bytes:
     return hashed_password
 
 
-def _generate_uuid(self):
+def _generate_uuid(self) -> str:
     '''
     Generate a new UUID and return it as a string representation.
     '''
-    return str(uuid.uuid4())
+    uuid = uuid.uuid4()
+    return str(uuid)
 
 
 class Auth:
