@@ -77,6 +77,7 @@ def profile():
 
 @app.route('/reset_password', methods=['PUT'])
 def update_password() -> str:
+    '''reset password route'''
     try:
         email = request.form.get('email')
         reset_token = request.form.get('reset_token')
