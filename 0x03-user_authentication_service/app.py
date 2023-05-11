@@ -75,27 +75,25 @@ def profile():
     return jsonify({"email": user.email}), 200
 
 
-@app.route('/reset_password', methods=['PUT'])
-def update_password() -> str:
-    '''reset password route'''
+@app.route('/reset_password', methods=['POST'])
+def get_reset_password_token() -> str:
+    '''
+    Handle the POST /reset_password route.
+    If the email is not registered, respond with a 403 status code.
+    Otherwise, generate a token and respond 
+    with a 200 HTTP status and JSON payload.
+    '''
     try:
-        email = request.form.get('email')
-        reset_token = request.form.get('reset_token')
-        new_password = request.form.get('new_password')
+        email = request.form['email']
     except KeyError:
-        abort(400)
+        abort(403)
 
     try:
-        AUTH.update_password(reset_token, new_password)
+        reset_token = AUTH.get_reset_password_token(email)
     except ValueError:
-        abort(400)
+        abort(403)
 
-    response = {
-        "email": email,
-        "reset_token": reset_token
-    }
-
-    return jsonify(response), 200
+    return jsonify({"email": email, "reset_token": reset_token}), 200
 
 
 if __name__ == '__main__':
