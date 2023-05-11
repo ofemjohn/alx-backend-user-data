@@ -76,15 +76,15 @@ def profile():
 
 
 @app.route('/reset_password', methods=['POST'])
-def get_reset_password_token() -> str:
+def reset_password_token() -> str:
     '''
     Handle the POST /reset_password route.
     If the email is not registered, respond with a 403 status code.
-    Otherwise, generate a token and respond 
+    Otherwise, generate a token and respond
     with a 200 HTTP status and JSON payload.
     '''
     try:
-        email = request.form['email']
+        email = request.form.get('email')
     except KeyError:
         abort(403)
 
