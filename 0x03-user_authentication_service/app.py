@@ -92,7 +92,7 @@ def update_password() -> str:
 
     response = {
         "email": email,
-        "message": "Password updated"
+        "reset_token": reset_token
     }
 
     return jsonify(response), 200
